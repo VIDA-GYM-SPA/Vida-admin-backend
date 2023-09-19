@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: roles
+#
+#  id               :bigint           not null, primary key
+#  base_permissions :integer          default([]), is an Array
+#  name             :string
+#  uuid             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
+one:
+  name: MyString
+  uuid: MyString
+
+two:
+  name: MyString
+  uuid: MyString

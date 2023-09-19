@@ -1,0 +1,44 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  dni             :string
+#  email           :string
+#  fingerprint     :text
+#  gender          :string
+#  lastname        :string
+#  name            :string
+#  password_digest :string
+#  permissions     :integer          default([]), is an Array
+#  rfid            :string
+#  status          :string
+#  uuid            :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  role_id         :bigint           not null
+#
+# Indexes
+#
+#  index_users_on_role_id  (role_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (role_id => roles.id)
+#
+
+one:
+  name: MyString
+  lastname: MyString
+  email: MyString
+  dni: MyString
+  password_digest: MyString
+  role: one
+
+two:
+  name: MyString
+  lastname: MyString
+  email: MyString
+  dni: MyString
+  password_digest: MyString
+  role: two

@@ -22,7 +22,7 @@ gem "puma", "~> 5.0"
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -31,10 +31,18 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors"
+
+gem "devise"
+
+gem "devise-jwt"
+
+gem "jwt"
+
+# gem "aasm"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -42,7 +50,28 @@ group :development, :test do
 end
 
 group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem 'rails-erd'
 end
 
+# gem :development do
+#   gem "shoulda-matches"
+
+#   gem "faker"
+# end
+
+gem "paperclip", "~> 6.0.0"
+gem "pagy", "~> 6.0"
+gem "annotate", "~> 3.2"
+gem "paranoia", "~> 2.6"
+gem "aasm", "~> 5.5"
+gem 'active_model_serializers'
+gem "sidekiq", "~> 7.1"
+gem "sidekiq-cron"
+gem "whenever", require: false
+gem "nokogiri"
+gem "open-uri"
+gem "currencyapi", "~> 1.0"
+gem "watir", "~> 7.2"
+gem "webdrivers", "~> 5.2"
+gem "headless", "~> 2.3"
+gem "figaro"

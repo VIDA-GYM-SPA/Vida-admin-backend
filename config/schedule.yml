@@ -1,0 +1,3 @@
+exchange_module: 
+  cron: "*/5 * * * *"
+  class: "ExchangeModule"
