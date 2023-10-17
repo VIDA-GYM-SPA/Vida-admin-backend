@@ -43,7 +43,7 @@ class UserSerializer < ActiveModel::Serializer
     permissions = Permission.all
     result = []
 
-    permissions.each do |item|
+    permissions.map do |item|
       object.permissions.map do |permission|
         if permission == item.id
           result << item
@@ -53,4 +53,3 @@ class UserSerializer < ActiveModel::Serializer
     result.as_json(:except => [:created_at, :updated_at])
   end
 end
-
