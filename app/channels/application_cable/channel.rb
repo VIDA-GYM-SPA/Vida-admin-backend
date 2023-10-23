@@ -3,10 +3,11 @@ module ApplicationCable
     def subscribed
       stream_from "security_#{current_user.id}_channel"
 
-      ActionCable.server.broadcast "security_#{current_user.id}_channel", { message: 'Hello World' }
+      # No envíes mensajes aquí, en lugar de eso, puedes hacerlo desde el cliente.
     end
 
     def unsubscribed
+      # Aquí puedes agregar lógica para manejar la desconexión del usuario si es necesario.
     end
   end
 end
