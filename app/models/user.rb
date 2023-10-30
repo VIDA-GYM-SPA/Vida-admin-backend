@@ -46,6 +46,8 @@ class User < ApplicationRecord
       transitions from: [:suscribed], to: :unpayed
     end
   end
+
+  after_save :broadcast_status_change
   
   belongs_to :role
 
@@ -67,6 +69,10 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 8 },
             if: -> { new_record? || !password.nil? }
+
+  def broadcast_status_change
+    UserStatusChannel.broadcast_to(self, status: status)
+  end
 
   def generate_uuid
     self.uuid = SecureRandom.uuid
