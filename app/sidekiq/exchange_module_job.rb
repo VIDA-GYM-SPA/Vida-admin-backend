@@ -1,7 +1,7 @@
 class ExchangeModuleJob
-  include Sidekiq::Job
+  include Sidekiq::Worker
 
   def perform(*args)
-    puts("TEST WARNING SEX")
+    puts("TEST WARNING")
   end
 end
