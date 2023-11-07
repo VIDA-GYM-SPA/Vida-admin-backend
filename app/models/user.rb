@@ -71,7 +71,21 @@ class User < ApplicationRecord
             if: -> { new_record? || !password.nil? }
 
   def broadcast_status_change
-    UserStatusChannel.broadcast_to(self, status: status)
+    Notification.create(
+      title: "Action-Needed", 
+      description: 'A user has pending an action', 
+      user_with_pendings_actions: self.id
+    )
+
+    ActionCable.server.broadcast("rfid", { 
+      message: 'A user has pending an action', 
+      type: "Action-Needed",
+      user: self,
+      username_parser: "#{self.name} #{self.lastname}",
+      block_system: true,
+      action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint",
+      timestamps: Time.now
+    })
   end
 
   def generate_uuid

@@ -29,15 +29,46 @@
 class UserSerializer < ActiveModel::Serializer
   has_one :role
 
-  attributes :uuid, 
+  attributes :id,
+             :uuid, 
              :name, 
              :lastname, 
              :email, 
              :dni,
              :rfid,
+             :role,
+             :plan_subscribed,
+             :payments,
              :fingerprint,
              :user_permissions,
-             
+
+  def plan_subscribed
+    {
+      id: 1,
+      name: "Platinum",
+      price: 35,
+      money: '$'
+    }
+  end
+
+  def payments 
+    [
+      {
+        id: 1,
+        amount: 35.0,
+        payment_date: (DateTime.now - 50249.minutes).strftime("%d/%m/%Y %I:%M %p"),
+        money: "$",
+        name: "#{object.name + " " + object.lastname}"
+      },
+      {
+        id: 2,
+        amount: 35.0,
+        payment_date: (DateTime.now).strftime("%d/%m/%Y %I:%M %p"),
+        money: "$",
+        name: "#{object.name + " " + object.lastname}"
+      }
+    ]
+  end
 
   def user_permissions
     permissions = Permission.all

@@ -27,9 +27,31 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if @current_user.role.name === 'admin'
+      if @user.update(user_params).save
+        render json: { message: "User updated successfully", user: @user }, status: :ok
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: 'Not authorized' }, status: :unauthorized
+    end
   end
 
   def destroy
+    if @current_user.role.name === 'admin'
+      if @user.destroy
+        render json: { message: "User deleted successfully" }, status: :ok
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: 'Not authorized' }, status: :unauthorized
+    end
+  end
+
+  def profile 
+    render json: @current_user, status: :ok
   end
   
   private

@@ -7,7 +7,5 @@ class UsersChannel < ApplicationCable::Channel
     stop_all_streams
   end
 
-  def my_profile
-    
-  end
+  def my_profile;end
 end

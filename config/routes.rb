@@ -5,11 +5,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  get 'payments/index'
-  get 'users/index'
-  get 'users/create'
-  get 'users/edit'
-  get 'users/destroy'
+  get 'dashboard/status_card'
+  get 'dashboard/invoices'
+  resources :users, except: [:profile]
+
+  get '/my-profile', to: "users#profile"
   
   post '/auth/login', to: 'authentication#login'
   post '/rfid/write_order', to: 'application#write_order'

@@ -24,4 +24,12 @@ class ApplicationController < ActionController::API
       timestamps: Time.now
     })
   end
+
+  def require_admin
+    if @current_user.role.name === 'admin'
+      yield
+    else
+      render json: { errors: 'Not authorized' }, status: :unauthorized
+    end
+  end
 end

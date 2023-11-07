@@ -44,3 +44,5 @@ Role.create(name: "staff", base_permissions: [
 Role.create(name: "client")
 
 User.create(name: 'Javier', lastname: 'Diaz', email: 'javierdiazt406@gmail.com', dni: "V-29543140", password: "12345678", password_confirmation: "12345678", gender: 'Male', role_id: 1, permissions: [1, 2])
+
+User.create(name: 'Alejandro', lastname: 'Semprun', email: 'alejandrocastro@gmail.com', dni: "V-31012111", password: "12345678", password_confirmation: "12345678", gender: 'Male', role_id: 2, permissions: [])
