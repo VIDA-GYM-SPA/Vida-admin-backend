@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
 
   def write_order
     ActionCable.server.broadcast("order", { 
-      rfid_identifier: 12, 
+      rfid_identifier: 1, 
       write: true,
       read: false,
       timestamps: Time.now

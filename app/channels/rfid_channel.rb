@@ -21,7 +21,7 @@ class RfidChannel < ApplicationCable::Channel
         message: nil, 
         type: "OK",
         user: @notification.user_with_pendings_actions,
-        username_parser: "#{@user.name} #{@user.lastname}",
+        username_parser: nil,
         block_system: false,
         action_description: "Nothing to do...",
         timestamps: Time.now

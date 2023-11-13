@@ -2,7 +2,7 @@ class ClientsChannel < ApplicationCable::Channel
   def subscribed
     stream_from "clients"
 
-    @clients = User.where(role: 3).to_json
+    @clients = User.where(role: 3)
 
     ActionCable.server.broadcast('clients', @clients)
   end

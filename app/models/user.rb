@@ -59,6 +59,7 @@ class User < ApplicationRecord
 
   before_create :generate_uuid
   before_create :generate_rfid
+  before_create :upcase_dni
 
   # validates_attachment_content_type :avatar, content_type: /\image\/.*\z/
 
@@ -86,6 +87,10 @@ class User < ApplicationRecord
       action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint",
       timestamps: Time.now
     })
+  end
+
+  def upcase_dni 
+    self.dni = self.dni.upcase
   end
 
   def generate_uuid
