@@ -5,6 +5,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :clients
   get 'dashboard/status_card'
   get 'dashboard/invoices'
   resources :users, except: [:profile]
