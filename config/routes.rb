@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   get '/my-profile', to: "users#profile"
   
-  post '/auth/login', to: 'authentication#login'
+  post '/login', to: 'authentication#login'
   post '/rfid/write_order', to: 'application#write_order'
 
   mount ActionCable.server => '/cable'
