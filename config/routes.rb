@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   get '/my-profile', to: "users#profile"
   
-  put '/users/edit_password', to: "users#edit_password"
+  put '/edit_password', to: "users#edit_password"
   post '/login', to: 'authentication#login'
   post '/rfid/write_order', to: 'application#write_order'
 
