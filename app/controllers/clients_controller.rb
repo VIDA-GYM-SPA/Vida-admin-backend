@@ -2,11 +2,11 @@ class ClientsController < ApplicationController
   before_action :authorize_request
   before_action :set_client, only: %i[ show update destroy ]
 
-  allowed_roles = [1, 2]
+  @allowed_roles = [1, 2]
 
   # GET /clients
   def index
-    if allowed_roles.includes(@current_user.role_id)
+    if @allowed_roles.includes(@current_user.role_id)
       @clients = User.where(role_id: 3)
       render json: @clients
     else 
