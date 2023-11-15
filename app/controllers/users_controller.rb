@@ -15,6 +15,7 @@ class UsersController < ApplicationController
           message: 'A user has pending an action', 
           type: "Action-Needed",
           user: @user,
+          username_parser: "#{@user.name} #{@user.lastname}",
           block_system: true,
           action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint"
         })
