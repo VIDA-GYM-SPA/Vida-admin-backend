@@ -11,12 +11,17 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = Payment.new(payment_params)
-    @payment.user_id = @current_user.id
-    if @payment.save 
-      render json: { message: "User created successfully", user: @payment }, status: :created
+    allowed_roles = [3]
+    if allowed_roles.include?(@current_user.role_id)
+      @payment = Payment.new(payment_params)
+      @payment.user_id = @current_user.id
+      if @payment.save 
+        render json: { message: "User created successfully", user: @payment }, status: :created
+      else
+        render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: "Unauthorized" }, status: :unauthorized
     end
   end
 
@@ -55,6 +60,6 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    params.require(:payment).permit(:amount, :user_id, :money, :method, :payed_at, :reference, :bank, :phone, :dni)
+    params.require(:payment).permit(:amount, :money, :method, :payed_at, :reference, :bank, :phone, :dni)
   end
 end
