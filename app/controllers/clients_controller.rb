@@ -6,12 +6,12 @@ class ClientsController < ApplicationController
 
   # GET /clients
   def index
-    if allowed_roles.includes(@current_user.role_id) {
+    if allowed_roles.includes(@current_user.role_id)
       @clients = User.where(role_id: 3)
       render json: @clients
-    } else {
+    else 
       render json: { error: 'Unauthorized' }, status: :unauthorized
-    }
+    end
   end
 
   # GET /clients/1
