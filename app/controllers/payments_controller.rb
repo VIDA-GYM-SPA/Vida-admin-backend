@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  before_action :authorize_request
+
   def index
     @payments = Payment.all
     render json: @payments, status: :ok
@@ -10,18 +12,49 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = Payment.new(payment_params)
-    if @current_user.role.name === 'admin'
-      if @payment.save 
-        render json: { message: "User created successfully", user: @payment }, status: :created
+    @payment.user_id = @current_user.id
+    if @payment.save 
+      render json: { message: "User created successfully", user: @payment }, status: :created
+    else
+      render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    allowed_roles = [1, 2]
+
+    if allowed_roles.include?(@current_user.role_id)
+      if @payment.update(payment_params).save
+        render json: { message: "User updated successfully", user: @payment }, status: :ok
+      else
+        render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
+      end 
+    else
+      render json: { message: "Unauthorized" }, status: :unauthorized
+    end
+  end 
+
+  def destroy
+    allowed_roles = [1]
+
+    if allowed_roles.include?(@current_user.role_id)
+      if @payment.destroy
+        render json: { message: "User deleted successfully" }, status: :ok
       else
         render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { errors: 'Not authorized' }, status: :unauthorized
+      render json: { message: "Unauthorized" }, status: :unauthorized
     end
   end
 
-  def edit
-    
+  private
+
+  def set_payment
+    @payment = Payment.find_by_id!(params[:id])
+  end
+
+  def payment_params
+    params.require(:payment).permit(:amount, :user_id, :money, :method, :payed_at, :reference)
   end
 end

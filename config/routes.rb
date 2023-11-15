@@ -5,10 +5,13 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :roles
   resources :clients
+  resources :users, except: [:profile]
+  resources :payments
+
   get 'dashboard/status_card'
   get 'dashboard/invoices'
-  resources :users, except: [:profile]
 
   get '/my-profile', to: "users#profile"
   

@@ -40,7 +40,7 @@ class UserSerializer < ActiveModel::Serializer
              :plan_subscribed,
              :payments,
              :fingerprint,
-             :user_permissions,
+            #  :user_permissions,
 
   def plan_subscribed
     {
@@ -70,17 +70,17 @@ class UserSerializer < ActiveModel::Serializer
     ]
   end
 
-  def user_permissions
-    permissions = Permission.all
-    result = []
+  # def user_permissions
+  #   permissions = Permission.all
+  #   result = []
 
-    permissions.map do |item|
-      object.permissions.map do |permission|
-        if permission == item.id
-          result << item
-        end
-      end
-    end
-    result.as_json(:except => [:created_at, :updated_at])
-  end
+  #   permissions.map do |item|
+  #     object.permissions.map do |permission|
+  #       if permission == item.id
+  #         result << item
+  #       end
+  #     end
+  #   end
+  #   result.as_json(:except => [:created_at, :updated_at])
+  # end
 end
