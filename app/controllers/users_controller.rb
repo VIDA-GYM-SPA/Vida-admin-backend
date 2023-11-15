@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def show
     @allowed_roles = [1, 2]
-
     if @allowed_roles.include?(@current_user.role_id)
       render json: @user, status: :ok
     else
