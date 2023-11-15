@@ -6,10 +6,12 @@
 #  amount       :float
 #  bank         :string
 #  discount     :float
+#  dni          :string
 #  is_accepted  :boolean
 #  method       :string
 #  money        :string
 #  payed_at     :date
+#  phone        :string
 #  process_date :string
 #  reason       :string
 #  reference    :string

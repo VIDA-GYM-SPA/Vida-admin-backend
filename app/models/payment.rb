@@ -6,10 +6,12 @@
 #  amount       :float
 #  bank         :string
 #  discount     :float
+#  dni          :string
 #  is_accepted  :boolean
 #  method       :string
 #  money        :string
 #  payed_at     :date
+#  phone        :string
 #  process_date :string
 #  reason       :string
 #  reference    :string
@@ -28,7 +30,7 @@
 class Payment < ApplicationRecord
   belongs_to :user
 
-  enum method: ["Pago Movil", "Efectivo", "Transferencia", "Binance", "Zelle"]
+  enum method: ["Pago Movil", "Efectivo", "Transferencia"]
 
   enum bank: [
     # Nacionales
@@ -58,8 +60,7 @@ class Payment < ApplicationRecord
     "Banco de la Mujer",
     "Banco de la Economía Comunal",
     # Internacionales
-    "Efectivo"
-    # "Bank of America",
+    "Bank of America",
     # "JP Morgan Chase",
     # "Wells Fargo",
     # "Citigroup",

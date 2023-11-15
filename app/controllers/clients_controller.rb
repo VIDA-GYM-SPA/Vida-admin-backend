@@ -23,6 +23,7 @@ class ClientsController < ApplicationController
   def create
     @allowed_roles = [1, 2]
     @client = User.new(client_params)
+    @client.role_id = 3
 
     if @allowed_roles.include?(@current_user.id) 
       if @client.save
@@ -46,17 +47,22 @@ class ClientsController < ApplicationController
 
   # DELETE /clients/1
   def destroy
-    @client.destroy
+    @allowed_roles = [1]
+    if @allowed_roles.include?(@current_user.role_id)
+      @client.destroy
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
-      @client = User.find(params[:id])
+      @client = User.where(id: params[:id], role_id: 3)[0]
     end
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.(:client).permit(:name, :lastname, :email, :dni, :gender, :permissions, :role_id, :password, :password_confirmation)
+      params.(:client).permit(:name, :lastname, :email, :dni, :gender, :password, :password_confirmation)
     end
 end
