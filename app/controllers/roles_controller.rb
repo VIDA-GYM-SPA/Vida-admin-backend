@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, except: [:index]
   before_action :set_role, only: %i[ show update destroy ]
 
   # GET /roles
@@ -65,6 +65,6 @@ class RolesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def role_params
-      params.fetch(:role, {:name})
-    end
+      params.require(:role).permit(:name)
+  end
 end
