@@ -47,7 +47,7 @@ class User < ApplicationRecord
     end
   end
 
-  after_save :broadcast_status_change
+  # after_save :broadcast_status_change
   
   belongs_to :role
 
@@ -71,23 +71,23 @@ class User < ApplicationRecord
             length: { minimum: 8 },
             if: -> { new_record? || !password.nil? }
 
-  def broadcast_status_change
-    Notification.create(
-      title: "Action-Needed", 
-      description: 'A user has pending an action', 
-      user_with_pendings_actions: self.id
-    )
+  # def broadcast_status_change
+  #   Notification.create(
+  #     title: "Action-Needed", 
+  #     description: 'A user has pending an action', 
+  #     user_with_pendings_actions: self.id
+  #   )
 
-    ActionCable.server.broadcast("rfid", { 
-      message: 'A user has pending an action', 
-      type: "Action-Needed",
-      user: self,
-      username_parser: "#{self.name} #{self.lastname}",
-      block_system: true,
-      action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint",
-      timestamps: Time.now
-    })
-  end
+  #   ActionCable.server.broadcast("rfid", { 
+  #     message: 'A user has pending an action', 
+  #     type: "Action-Needed",
+  #     user: self,
+  #     username_parser: "#{self.name} #{self.lastname}",
+  #     block_system: true,
+  #     action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint",
+  #     timestamps: Time.now
+  #   })
+  # end
 
   def upcase_dni 
     self.dni = self.dni.upcase
