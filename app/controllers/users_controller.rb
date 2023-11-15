@@ -5,6 +5,16 @@ class UsersController < ApplicationController
     render json: @current_user, status: :ok
   end
 
+  def show
+    @allowed_roles = [1]
+
+    if @allowed_roles.include?(@current_user.role_id)
+      render json: @user, status: :ok
+    else
+      render json: { errors: 'Not authorized' }, status: :unauthorized
+    end
+  end
+
   def create
     @user = User.new(user_params)
     @user.status = 'suscribed'
