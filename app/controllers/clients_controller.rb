@@ -6,7 +6,7 @@ class ClientsController < ApplicationController
   # GET /clients
   def index
     @allowed_roles = [1, 2]
-    if @allowed_roles.includes(@current_user.role_id)
+    if @allowed_roles.include?(@current_user.role_id)
       @clients = User.where(role_id: 3)
       render json: @clients
     else 
