@@ -7,7 +7,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :roles
   resources :clients
-  resources :users, except: [:profile]
+  resources :users, except: [:profile, :edit_password]
   resources :payments
 
   get 'dashboard/status_card'
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get '/my-profile', to: "users#profile"
   
+  put '/users/edit_password', to: "users#edit_password"
   post '/login', to: 'authentication#login'
   post '/rfid/write_order', to: 'application#write_order'
 

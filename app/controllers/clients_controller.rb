@@ -21,13 +21,18 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
+    @allowed_roles = [1, 2]
     @client = User.new(client_params)
 
-    if @client.save
-      render json: @client, status: :created, location: @client
-    else
-      render json: @client.errors, status: :unprocessable_entity
-    end
+    if @allowed_roles.include?(@current_user.id) 
+      if @client.save
+        render json: @client, status: :created, location: @client
+      else
+        render json: @client.errors, status: :unprocessable_entity
+      end
+    else 
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end 
   end
 
   # PATCH/PUT /clients/1
@@ -52,6 +57,6 @@ class ClientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.fetch(:client, {})
+      params.(:client).permit(:name, :lastname, :email, :dni, :gender, :permissions, :role_id, :password, :password_confirmation)
     end
 end
