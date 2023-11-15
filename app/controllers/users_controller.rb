@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.status = 'payed'
+    @user.status = 'suscribed'
     if @current_user.role.name === 'admin'
       if @user.save 
         Notification.create(title: "Action-Needed", description: 'A user has pending an action', user_with_pendings_actions: @user.id)
