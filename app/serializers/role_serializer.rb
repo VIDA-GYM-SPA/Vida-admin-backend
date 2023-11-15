@@ -10,19 +10,19 @@
 #  updated_at       :datetime         not null
 #
 class RoleSerializer < ActiveModel::Serializer
-  attributes :name, :permissions
+  attributes :name, :uuid
 
-  def permissions
-    permissions = Permission.all
-    result = []
+  # def permissions
+  #   permissions = Permission.all
+  #   result = []
 
-    permissions.each do |item|
-      object.base_permissions.map do |permission|
-        if permission == item.id
-          result << item
-        end
-      end
-    end
-    result.as_json(:except => [:created_at, :updated_at])
-  end
+  #   permissions.each do |item|
+  #     object.base_permissions.map do |permission|
+  #       if permission == item.id
+  #         result << item
+  #       end
+  #     end
+  #   end
+  #   result.as_json(:except => [:created_at, :updated_at])
+  # end
 end
