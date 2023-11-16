@@ -5,6 +5,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :exchanges
   resources :roles
   resources :clients
   resources :users, except: [:profile, :edit_password]

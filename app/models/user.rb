@@ -47,6 +47,8 @@ class User < ApplicationRecord
     end
   end
 
+  after_create :add_invoices
+
   # after_save :broadcast_status_change
   
   belongs_to :role
@@ -89,6 +91,62 @@ class User < ApplicationRecord
   #   })
   # end
 
+  def add_invoices
+    redis = Redis.new
+
+    months = { 
+                1 => "ene",
+                2 => "feb",
+                3 => "mar",
+                4 => "abr",
+                5 => "may",
+                6 => "jun",
+                7 => "jul",
+                8 => "ago",  
+                9 => "sep",  
+                10 => "oct",
+                11 => "nov",
+                12 => "dic"
+             }
+
+    parse_money = 35.0
+
+    parsed_month = self.created_at.strftime('%m').to_i
+    parsed_year = self.created_at.strftime('%Y').to_i
+
+    if redis.get("invoices:#{parsed_year}") == nil
+      redis.set("invoices:#{parsed_year}", '[]')
+    end
+
+    invoices = JSON.parse(redis.get("invoices:#{parsed_year}"))
+
+    month_invoice = []
+
+    if invoices.select { |item| item["month"] == months[parsed_month] }.length == 0
+      month_invoice.push({
+        month: months[parsed_month],
+        year: parsed_year,
+        month_invoices: 0,
+        new_users: 0
+      })
+
+      invoices.push(month_invoice[0])
+
+      redis.set("invoices:#{parsed_year}", invoices.to_json)
+    end
+
+    if redis.get("invoices:#{parsed_year}") != nil
+      invoices = JSON.parse(redis.get("invoices:#{parsed_year}"))
+
+      if invoices.select { |item| item["month"] == months[parsed_month] }.length > 0
+        invoices.select { |item| item["month"] == months[parsed_month] }[0]["month_invoices"] += parse_money
+        invoices.select { |item| item["month"] == months[parsed_month] }[0]["new_users"] += 1
+
+        redis.set("invoices:#{parsed_year}", invoices.to_json)
+      end
+    end
+  end
+
   def upcase_dni 
     self.dni = self.dni.upcase
   end
@@ -99,5 +157,11 @@ class User < ApplicationRecord
 
   def generate_rfid
     self.rfid = SecureRandom.hex(48)
+  end
+
+  def self.created_on_date(month, year)
+    start_date = Date.new(year, month, 1)
+    end_date = start_date.end_of_month
+    where(created_at: start_date..end_date).length
   end
 end

@@ -1,0 +1,15 @@
+# == Schema Information
+#
+# Table name: exchanges
+#
+#  id         :bigint           not null, primary key
+#  dolar      :float
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  dolar: 1.5
+
+two:
+  dolar: 1.5

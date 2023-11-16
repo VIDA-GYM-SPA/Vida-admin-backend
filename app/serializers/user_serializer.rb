@@ -39,8 +39,7 @@ class UserSerializer < ActiveModel::Serializer
              :role,
              :plan_subscribed,
              :payments,
-             :fingerprint,
-            #  :user_permissions,
+             :fingerprint
 
   def plan_subscribed
     {
@@ -56,31 +55,17 @@ class UserSerializer < ActiveModel::Serializer
       {
         id: 1,
         amount: 35.0,
-        payment_date: (DateTime.now - 50249.minutes).strftime("%d/%m/%Y %I:%M %p"),
+        payment_date: (Date.today).strftime("%d/%m/%Y"),
         money: "$",
         name: "#{object.name + " " + object.lastname}"
       },
       {
         id: 2,
         amount: 35.0,
-        payment_date: (DateTime.now).strftime("%d/%m/%Y %I:%M %p"),
+        payment_date: (Date.today).strftime("%d/%m/%Y"),
         money: "$",
         name: "#{object.name + " " + object.lastname}"
       }
     ]
   end
-
-  # def user_permissions
-  #   permissions = Permission.all
-  #   result = []
-
-  #   permissions.map do |item|
-  #     object.permissions.map do |permission|
-  #       if permission == item.id
-  #         result << item
-  #       end
-  #     end
-  #   end
-  #   result.as_json(:except => [:created_at, :updated_at])
-  # end
 end
