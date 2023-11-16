@@ -28,6 +28,7 @@ class UsersController < ApplicationController
           block_system: true,
           action_description: "User needs to take actions:\n1. Add RFID band.\n2. Add fingerprint"
         })
+        ExchangeModuleJob.perform_at(15.seconds)
         render json: { message: "User created successfully", user: @user }, status: :created
       else
         render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity

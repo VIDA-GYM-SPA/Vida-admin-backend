@@ -2,6 +2,6 @@ class ExchangeModuleJob
   include Sidekiq::Worker
 
   def perform(*args)
-    puts("TEST WARNING")
+    RfidManager::change_rfid_to_ok
   end
 end
