@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    allowed_roles = [3]
+    allowed_roles = [1, 2, 3]
     if allowed_roles.include?(@current_user.role_id)
       @payment = Payment.new(payment_params)
       @payment.user_id = @current_user.id
@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
   end
 
   def update
-    allowed_roles = [1, 2]
+    allowed_roles = [1, 2, 3]
 
     if allowed_roles.include?(@current_user.role_id)
       if @payment.update(payment_params).save
