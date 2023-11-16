@@ -64,7 +64,7 @@ class UsersController < ApplicationController
       render json: { errors: 'Passwords do not match' }, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     if @current_user.role.name === 'admin'
       if @user.destroy
