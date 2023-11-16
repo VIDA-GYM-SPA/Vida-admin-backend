@@ -93,6 +93,7 @@ class User < ApplicationRecord
 
   def add_invoices
     redis = Redis.new
+    return unless self.role_id == 3
 
     months = { 
                 1 => "ene",
