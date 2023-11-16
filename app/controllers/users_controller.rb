@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   def edit_password
     if password_params[:password] == password_params[:password_confirmation]
       if BCrypt::Password.new(@current_user.password_digest) == password_params[:password]
-        if @current_user.update(password_digest: password_params[:new_password])
+        if @current_user.update(password: password_params[:new_password])
           render json: { message: "Password updated successfully" }, status: :ok
         else
           render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
       render json: { errors: 'Passwords do not match' }, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
     if @current_user.role.name === 'admin'
       if @user.destroy
